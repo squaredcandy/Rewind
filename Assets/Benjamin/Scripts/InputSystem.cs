@@ -16,13 +16,21 @@ public static class KeyBinding
 	[SerializeField] public static string DPadVertical;
 
 	[SerializeField] public static string Trigger;
-	[SerializeField] public static KeyCode LShoulderButton;
-	[SerializeField] public static KeyCode RShoulderButton;
 
 	[SerializeField] public static KeyCode AButton;
 	[SerializeField] public static KeyCode BButton;
 	[SerializeField] public static KeyCode XButton;
 	[SerializeField] public static KeyCode YButton;
+
+	[SerializeField] public static KeyCode LShoulderButton;
+	[SerializeField] public static KeyCode RShoulderButton;
+
+	[SerializeField] public static KeyCode LStickButton;
+	[SerializeField] public static KeyCode RStickButton;
+
+	[SerializeField] public static KeyCode ViewButton;
+	[SerializeField] public static KeyCode MenuButton;
+	[SerializeField] public static KeyCode XBoxButton;
 }
 
 [System.Serializable]
@@ -31,13 +39,23 @@ public class KeyHistory
 	[SerializeField] public Vector3 movementVector;
 	[SerializeField] public Vector2 cameraVector;
 	[SerializeField] public Vector2 dPadVector;
+
 	[SerializeField] public float triggerValue;
+
 	[SerializeField] public bool aButtonDown;
 	[SerializeField] public bool bButtonDown;
 	[SerializeField] public bool xButtonDown;
 	[SerializeField] public bool yButtonDown;
+
 	[SerializeField] public bool lShoulderButtonDown;
 	[SerializeField] public bool rShoulderButtonDown;
+
+	[SerializeField] public bool lStickDown;
+	[SerializeField] public bool rStickDown;
+
+	[SerializeField] public bool viewButtonDown;
+	[SerializeField] public bool menuButtonDown;
+	[SerializeField] public bool xBoxButtonDown;
 }
 
 public class InputSystem : MonoBehaviour {
@@ -68,6 +86,13 @@ public class InputSystem : MonoBehaviour {
 
 	private const int LShoulder = 4;
 	private const int RShoulder = 5;
+
+	private const int LStick = 8;
+	private const int RStick = 9;
+
+	private const int ViewButton = 6;
+	private const int MenuButton = 7;
+	private const int XBoxButton = 10;
 
 	[Range(0, 15)] public int currentJoystick = 0;
 	
@@ -119,6 +144,13 @@ public class InputSystem : MonoBehaviour {
 
 		KeyBinding.LShoulderButton = joystickButtonOffset + LShoulder;
 		KeyBinding.RShoulderButton = joystickButtonOffset + RShoulder;
+
+		KeyBinding.LStickButton = joystickButtonOffset + LStick;
+		KeyBinding.RStickButton = joystickButtonOffset + RStick;
+
+		KeyBinding.ViewButton = joystickButtonOffset + ViewButton;
+		KeyBinding.MenuButton = joystickButtonOffset + MenuButton;
+		KeyBinding.XBoxButton = joystickButtonOffset + XBoxButton;
 	}
 
 	void SetupMouseKeyboard()
@@ -134,7 +166,7 @@ public class InputSystem : MonoBehaviour {
 	{
 		KeyHistory k = keyHistory/*[keyHistoryIndex]*/;
 
-		k.movementVector.y = Input.GetAxis(KeyBinding.CharacterMovementX);
+		k.movementVector.x = Input.GetAxis(KeyBinding.CharacterMovementX);
 		k.movementVector.z = Input.GetAxis(KeyBinding.CharacterMovementY);
 
 		k.cameraVector.x = Input.GetAxis(KeyBinding.CameraMovementX);
@@ -152,6 +184,13 @@ public class InputSystem : MonoBehaviour {
 
 		k.lShoulderButtonDown = Input.GetKey(KeyBinding.LShoulderButton);
 		k.rShoulderButtonDown = Input.GetKey(KeyBinding.RShoulderButton);
+
+		k.lStickDown = Input.GetKey(KeyBinding.LStickButton);
+		k.rStickDown = Input.GetKey(KeyBinding.RStickButton);
+
+		k.viewButtonDown = Input.GetKey(KeyBinding.ViewButton);
+		k.menuButtonDown = Input.GetKey(KeyBinding.MenuButton);
+		k.xBoxButtonDown = Input.GetKey(KeyBinding.XBoxButton);
 
 		//keyHistoryIndex = (keyHistoryIndex + 1) % keyHistory.Length;
 	}
